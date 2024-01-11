@@ -69,11 +69,11 @@ app.get('/prepareSentimentNews', async (req, res)=>{
    res.send("ok");
 });
 
-app.listen(4000, () => {
-    console.log('listening on port 4000');
-})
+// app.listen(4000, () => {
+//     console.log('listening on port 4000');
+// })
 
-// const server = http.createServer({}, app).listen(3000);
+const server = http.createServer({}, app).listen(3000);
 
-// server.keepAliveTimeout = (60 * 1000) + 1000;
-// server.headersTimeout = (60 * 1000) + 2000;
+server.keepAliveTimeout = (60 * 1000) + 1000;
+server.headersTimeout = (60 * 1000) + 2000;
