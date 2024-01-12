@@ -65,8 +65,9 @@ function query(data) {
 }
 
 app.get('/prepareSentimentNews', async (req, res)=>{
-   await prepareSentimentNews();
    res.send("ok");
+   await prepareSentimentNews();
+   console.log("completed")
 });
 
 // app.listen(4000, () => {
@@ -75,5 +76,5 @@ app.get('/prepareSentimentNews', async (req, res)=>{
 
 const server = http.createServer({}, app).listen(3000);
 
-server.keepAliveTimeout = (60 * 1000) + 1000;
-server.headersTimeout = (60 * 1000) + 2000;
+// server.keepAliveTimeout = (60 * 1000) + 1000;
+// server.headersTimeout = (60 * 1000) + 2000;
