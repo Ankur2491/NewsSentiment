@@ -14,7 +14,7 @@ var client = redis.createClient({
     ,password:"AFahzbIs3wTxs0VMPnvTqkuqyoZOWXwV"
   });
 
-async function prepareSentimentNews() {
+async function prepareSentimentNews(resp) {
     let mainObj = {"positive": [], "negative": []};
     let mainArticles = [];
     let promiseArr = [];
@@ -46,6 +46,7 @@ async function prepareSentimentNews() {
                 else
                     mainObj.negative.push(artObj);
             }
+	resp.write(JSON.stringify(artObj));
         }
         await client.connect()
         // console.log(JSON.stringify(mainObj));
@@ -65,9 +66,8 @@ function query(data) {
 }
 
 app.get('/prepareSentimentNews', async (req, res)=>{
-   res.send("ok");
-   await prepareSentimentNews();
-   console.log("completed")
+   await prepareSentimentNews(res);
+   res.end();
 });
 
 // app.listen(4000, () => {
