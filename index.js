@@ -3,6 +3,7 @@ var express = require('express');
 var cors = require('cors');
 var axios = require('axios');
 const http = require("http");
+const cron = require("node-cron");
 var app = express();
 app.use(cors())
 
@@ -14,7 +15,7 @@ var client = redis.createClient({
     ,password:"AFahzbIs3wTxs0VMPnvTqkuqyoZOWXwV"
   });
 
-async function prepareSentimentNews(resp) {
+async function prepareSentimentNews() {
     let mainObj = {"positive": [], "negative": []};
     let mainArticles = [];
     let promiseArr = [];
@@ -46,7 +47,6 @@ async function prepareSentimentNews(resp) {
                 else
                     mainObj.negative.push(artObj);
             }
-	resp.write(JSON.stringify(artObj));
         }
         await client.connect()
         // console.log(JSON.stringify(mainObj));
@@ -65,19 +65,25 @@ function query(data) {
 	);
 }
 
-app.get('/prepareSentimentNews', async (req, res)=>{
-   await prepareSentimentNews(res);
-   res.end();
-});
+// app.get('/prepareSentimentNews', async (req, res)=>{
+//    await prepareSentimentNews(res);
+//    res.end();
+// });
 
-// app.listen(4000, () => {
-//     console.log('listening on port 4000');
-// })
+cron.schedule("*/15 * * * *", async function () {
+    console.log("---------------------");
+    console.log("running new sentiment analysis every 15 mins...");
+    await prepareSentimentNews();
+  });
 
-const server = http.createServer({}, app).listen(3000);
+app.listen(4000, () => {
+    console.log('listening on port 4000');
+})
 
-server.keepAliveTimeout = (60 * 1000) + 1000;
-server.headersTimeout = (60 * 1000) + 2000;
+// const server = http.createServer({}, app).listen(3000);
+
+// server.keepAliveTimeout = (60 * 1000) + 1000;
+// server.headersTimeout = (60 * 1000) + 2000;
 
 // setInterval(async ()=>{
 //  await prepareSentimentNews();
