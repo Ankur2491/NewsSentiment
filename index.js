@@ -64,22 +64,22 @@ function query(data) {
 	);
 }
 
-// app.get('/prepareSentimentNews', async (req, res)=>{
-//    res.send("ok");
-//    await prepareSentimentNews();
-//    console.log("completed")
-// });
+app.get('/prepareSentimentNews', async (req, res)=>{
+   res.send("ok");
+   await prepareSentimentNews();
+   console.log("completed")
+});
 
 // app.listen(4000, () => {
 //     console.log('listening on port 4000');
 // })
 
-// const server = http.createServer({}, app).listen(3000);
+const server = http.createServer({}, app).listen(3000);
 
-// server.keepAliveTimeout = (60 * 1000) + 1000;
-// server.headersTimeout = (60 * 1000) + 2000;
+server.keepAliveTimeout = (60 * 1000) + 1000;
+server.headersTimeout = (60 * 1000) + 2000;
 
-setInterval(async ()=>{
- await prepareSentimentNews();
- console.log("prepared!!");
-},600000);
+// setInterval(async ()=>{
+//  await prepareSentimentNews();
+//  console.log("prepared!!");
+// },600000);
