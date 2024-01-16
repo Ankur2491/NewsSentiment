@@ -70,7 +70,7 @@ function query(data) {
 //    res.end();
 // });
 
-cron.schedule("*/15 * * * *", async function () {
+cron.schedule("*/5 * * * *", async function () {
     console.log("---------------------");
     console.log("running new sentiment analysis every 15 mins...");
     await prepareSentimentNews();
